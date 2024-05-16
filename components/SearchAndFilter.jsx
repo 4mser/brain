@@ -1,16 +1,21 @@
 import React from 'react';
 
 const SearchInput = ({ searchQuery, handleSearchChange }) => (
-  <div className="flex-1">
+  <div className="flex-1 relative">
     <input
       type="text"
       value={searchQuery}
       onChange={handleSearchChange}
       placeholder="Search nodes..."
-      className="w-full p-2 bg-gray-800 text-white rounded"
+      className="w-full p-2 pl-7 bg-gray-800 text-white rounded"
     />
+    <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+      <img src="/assets/icons/search.svg" alt="Search" className="h-5 w-5" />
+    </div>
   </div>
 );
+
+
 
 const FilterCheckbox = ({ label, checked, onChange }) => (
   <label className="flex items-center">
