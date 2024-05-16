@@ -5,6 +5,7 @@ import { initializeNetwork, getAllChildNodes } from '../utils/graphUtils';
 import FilterPanel from './FilterPanel';
 import NodeModal from './NodeModal';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SearchInput } from './SearchAndFilter';
 
 const GraphView = () => {
   const graphRef = useRef(null);
@@ -141,6 +142,10 @@ const GraphView = () => {
 
   return (
     <div className="">
+        <SearchInput
+            searchQuery={searchQuery}
+            handleSearchChange={handleSearchChange}
+        />
       <FilterPanel
         filters={filters}
         toggleFilter={toggleFilter}

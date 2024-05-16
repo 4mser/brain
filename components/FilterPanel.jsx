@@ -27,15 +27,15 @@ const FilterPanel = ({ filters, toggleFilter, searchQuery, handleSearchChange })
       <div 
         className={`absolute z-50 w-52 p-4 bg-gradient-to-b from-gray-900 to-neutral-950 text-white m-5 shadow-xl rounded-xl max-h-[100dvh] border border-white/10 h-fit ${isOpen ? 'block' : 'hidden'} md:block`}
       >
-        <h3 className="text-lg font-bold mb-2">Search</h3>
+        {/* <h3 className="text-lg font-bold mb-2">Search</h3>
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search nodes..."
           className="w-full p-2 bg-gray-800 text-white rounded"
-        />
-        <h3 className="text-lg font-bold mt-4 mb-2">Filters</h3>
+        /> */}
+        <h3 className="text-lg font-bold  mb-2">Filters</h3>
         <div className="space-y-2">
           <label className="flex items-center">
             <input
