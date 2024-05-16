@@ -165,8 +165,6 @@ export const initializeNetwork = (graphRef, nodesRef, edgesRef, networkRef, hand
     interaction: {
       zoomView: true,
       dragView: true,
-      minZoom: 0.5,
-      maxZoom: 1.5
     },
     manipulation: {
       enabled: false

@@ -1,6 +1,5 @@
-'use client'
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { Network } from 'vis-network';
 import { DataSet } from 'vis-data';
 import { initializeNetwork, getAllChildNodes } from '../utils/graphUtils';
 import FilterPanel from './FilterPanel';
@@ -84,7 +83,7 @@ const GraphView = () => {
 
       setTimeout(() => {
         openModal();
-      }, 300);
+      }, 500);
     } else {
       toggleFilter('all'); // Show all nodes and edges
     }

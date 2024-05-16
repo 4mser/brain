@@ -2807,7 +2807,7 @@ suspend-react@^0.1.3:
   resolved "https://registry.npmjs.org/suspend-react/-/suspend-react-0.1.3.tgz"
   integrity sha512-aqldKgX9aZqpoDp3e8/BZ8Dm7x1pJl+qI3ZKxDN0i/IQTWUwBx/ManmlVJ3wowqbno6c2bmiIfs+Um6LbsjJyQ==
 
-tailwindcss@^3.4.1:
+tailwindcss@^3.4.3:
   version "3.4.3"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.3.tgz"
   integrity sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==
@@ -3038,12 +3038,17 @@ utility-types@^3.10.0:
   resolved "https://registry.npmjs.org/utility-types/-/utility-types-3.11.0.tgz"
   integrity sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==
 
-uuid@^2.0.1, "uuid@^3.4.0 || ^7.0.0 || ^8.0.0", "uuid@^7.0.0 || ^8.0.0":
+uuid@^2.0.1:
   version "2.0.3"
   resolved "https://registry.npmjs.org/uuid/-/uuid-2.0.3.tgz"
   integrity sha512-FULf7fayPdpASncVy4DLh3xydlXEJJpvIELjYjNeQWYUZ9pclcpvCZSr2gkmN2FrrGcI7G/cJsIEwk5/8vfXpg==
 
-"uuid@^3.4.0 || ^7.0.0 || ^8.0.0 || ^9.0.0", uuid@^9.0.1:
+"uuid@^3.4.0 || ^7.0.0 || ^8.0.0", "uuid@^7.0.0 || ^8.0.0":
+  version "8.3.2"
+  resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
+  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uuid@^9.0.1:
   version "9.0.1"
   resolved "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
@@ -3053,27 +3058,27 @@ vis-data@^6.2.1, vis-data@^6.5.1:
   resolved "https://registry.npmjs.org/vis-data/-/vis-data-6.6.1.tgz"
   integrity sha512-xmujDB2Dzf8T04rGFJ9OP4OA6zRVrz8R9hb0CVKryBrZRCljCga9JjSfgctA8S7wdZu7otDtUIwX4ZOgfV/57w==
 
-"vis-data@^6.3.0 || ^7.0.0":
-  version "7.1.9"
-  resolved "https://registry.npmjs.org/vis-data/-/vis-data-7.1.9.tgz"
-  integrity sha512-COQsxlVrmcRIbZMMTYwD+C2bxYCFDNQ2EHESklPiInbD/Pk3JZ6qNL84Bp9wWjYjAzXfSlsNaFtRk+hO9yBPWA==
+vis-data@^7.0.0, vis-data@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.npmjs.org/vis-data/-/vis-data-7.1.2.tgz"
+  integrity sha512-RPSegFxEcnp3HUEJSzhS2vBdbJ2PSsrYYuhRlpHp2frO/MfRtTYbIkkLZmPkA/Sg3pPfBlR235gcoKbtdm4mbw==
 
 vis-network@^7.6.4:
   version "7.10.2"
   resolved "https://registry.npmjs.org/vis-network/-/vis-network-7.10.2.tgz"
   integrity sha512-KDx2agbDnaiE0Bye4AcCRqTn5mxzDKhdUNpKkzSn0AOLBmdhNtPGjxAFluAmvFVyiSK5R6Q5KIWdLjeIMu/PAQ==
 
-vis-network@^9.1.9:
-  version "9.1.9"
-  resolved "https://registry.npmjs.org/vis-network/-/vis-network-9.1.9.tgz"
-  integrity sha512-Ft+hLBVyiLstVYSb69Q1OIQeh3FeUxHJn0WdFcq+BFPqs+Vq1ibMi2sb//cxgq1CP7PH4yOXnHxEH/B2VzpZYA==
+vis-network@^9.1.2:
+  version "9.1.2"
+  resolved "https://registry.npmjs.org/vis-network/-/vis-network-9.1.2.tgz"
+  integrity sha512-BdapguKg7sk3NvdZaDsM7T6rNhOBFz0/F4ZScxctK4klRzQPLQPTEcmbioXaZhMkkgWymzBR3lFCxL1q+eYyAw==
 
 "vis-util@^3.0.0 || ^4.0.0", vis-util@^4.0.0:
   version "4.3.4"
   resolved "https://registry.npmjs.org/vis-util/-/vis-util-4.3.4.tgz"
   integrity sha512-hJIZNrwf4ML7FYjs+m+zjJfaNvhjk3/1hbMdQZVnwwpOFJS/8dMG8rdbOHXcKoIEM6U5VOh3HNpaDXxGkOZGpw==
 
-vis-util@^5.0.1:
+"vis-util@^4.0.0 || ^5.0.0", vis-util@^5.0.1:
   version "5.0.7"
   resolved "https://registry.npmjs.org/vis-util/-/vis-util-5.0.7.tgz"
   integrity sha512-E3L03G3+trvc/X4LXvBfih3YIHcKS2WrP0XTdZefr6W6Qi/2nNCqZfe4JFfJU6DcQLm6Gxqj2Pfl+02859oL5A==

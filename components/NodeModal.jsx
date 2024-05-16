@@ -36,7 +36,7 @@ const NodeModal = ({ selectedNode, modalIsOpen, closeModal }) => (
       <h2 className="text-2xl font-bold mb-4">{selectedNode?.label}</h2>
       <p className="text-lg"><strong>Type:</strong> {selectedNode?.type}</p>
       {selectedNode?.title && <p className="text-lg"><strong>Title:</strong> {selectedNode?.title}</p>}
-      
+      <button onClick={closeModal} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Close</button>
     </motion.div>
   </Modal>
 );
