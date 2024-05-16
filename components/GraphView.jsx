@@ -140,14 +140,14 @@ const GraphView = () => {
   }, [filters, searchQuery]);
 
   return (
-    <div className="flex h-screen">
+    <div className="">
       <FilterPanel
         filters={filters}
         toggleFilter={toggleFilter}
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
       />
-      <div ref={graphRef} className="flex-1 bg-black" />
+      <div ref={graphRef} className="flex-1 bg-black h-[100dvh]" />
 
       <AnimatePresence>
         {modalIsOpen && (
