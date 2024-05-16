@@ -150,10 +150,12 @@ const GraphView = () => {
       <div className="flex items-center p-4 bg-slate-800 z-50">
         <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
         <button
-          className="ml-4 p-2 bg-slate-800 text-white/80 rounded-full border border-white/10"
+          className={`ml-4 p-2 bg-slate-800 transition text-white/80 rounded-full border border-white/20 ${filterPanelIsOpen && 'bg-white'}`}
           onClick={toggleFilterPanel}
         >
-          {filterPanelIsOpen ? 'Filters' : 'Filters'}
+          {/* {filterPanelIsOpen ? 'Filters' : 'Filters'} */}
+            <img src="/assets/icons/filter1.svg" alt="Search" className={`h-5 w-5 opacity-80 transition ${filterPanelIsOpen && 'invert'}`} />
+
         </button>
       </div>
       <AnimatePresence>
