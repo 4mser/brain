@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilterCheckbox } from './SearchAndFilter';
+import { FilterCheckbox, FilterSwitch } from './SearchAndFilter';
 
 const FilterPanel = ({ filters, toggleFilter }) => {
   const filterOptions = [
@@ -17,7 +17,7 @@ const FilterPanel = ({ filters, toggleFilter }) => {
       <h3 className="text-lg font-bold mb-4">Filters</h3>
       <div className="space-y-3">
         {filterOptions.map((option) => (
-          <FilterCheckbox
+          <FilterSwitch
             key={option.filter}
             label={option.label}
             checked={filters[option.filter]}
