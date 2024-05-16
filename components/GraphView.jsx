@@ -147,23 +147,32 @@ const GraphView = () => {
 
   return (
     <div className="flex flex-col h-[100dvh]">
-      <div className="flex items-center p-4 bg-slate-800">
+      <div className="flex items-center p-4 bg-slate-800 z-50">
         <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
         <button
           className="ml-4 p-2 bg-slate-800 text-white/80 rounded-full border border-white/10"
           onClick={toggleFilterPanel}
         >
-          {filterPanelIsOpen ? 'x' : 'Filters'}
+          {filterPanelIsOpen ? 'Filters' : 'Filters'}
         </button>
       </div>
-      <FilterPanel
-        filters={filters}
-        toggleFilter={toggleFilter}
-        searchQuery={searchQuery}
-        handleSearchChange={handleSearchChange}
-        isOpen={filterPanelIsOpen}
-        toggleMenu={toggleFilterPanel}
-      />
+      <AnimatePresence>
+        {filterPanelIsOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -100 }}
+            className="absolute z-40 top-16 w-full flex justify-center"
+          >
+            <FilterPanel
+              filters={filters}
+              toggleFilter={toggleFilter}
+              isOpen={filterPanelIsOpen}
+              toggleMenu={toggleFilterPanel}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div ref={graphRef} className="flex-1 bg-gradient-to-tl from-neutral-950 to-slate-900" />
 
       <AnimatePresence>

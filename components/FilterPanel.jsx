@@ -1,8 +1,7 @@
 import React from 'react';
 import { FilterCheckbox } from './SearchAndFilter';
 
-const FilterPanel = ({ filters, toggleFilter, isOpen, toggleMenu }) => {
-
+const FilterPanel = ({ filters, toggleFilter }) => {
   const filterOptions = [
     { label: 'Show All', filter: 'all' },
     { label: 'Departments', filter: 'department' },
@@ -14,28 +13,17 @@ const FilterPanel = ({ filters, toggleFilter, isOpen, toggleMenu }) => {
   ];
 
   return (
-    <div>
-      {/* Background overlay to close the menu when clicking outside */}
-      <div
-        className={`fixed top-0 left-0 w-full h-full bg-black/80 z-40 ${isOpen ? 'block' : 'hidden'}`}
-        onClick={toggleMenu}
-      ></div>
-
-      {/* Filter panel */}
-      <div
-        className={`absolute z-50 w-52 p-4 bg-gradient-to-b from-gray-900 to-neutral-950 text-white m-5 shadow-xl rounded-xl max-h-[100dvh] border border-white/10 h-fit ${isOpen ? 'block' : 'hidden'}`}
-      >
-        <h3 className="text-lg font-bold mb-2">Filters</h3>
-        <div className="space-y-2">
-          {filterOptions.map((option) => (
-            <FilterCheckbox
-              key={option.filter}
-              label={option.label}
-              checked={filters[option.filter]}
-              onChange={() => toggleFilter(option.filter)}
-            />
-          ))}
-        </div>
+    <div className=" bg-gradient-to-b from-gray-900 to-neutral-950 text-white p-6 rounded-b-3xl shadow-lg border border-white/10 max-h-[80vh] overflow-y-auto w-full">
+      <h3 className="text-lg font-bold mb-4">Filters</h3>
+      <div className="space-y-3">
+        {filterOptions.map((option) => (
+          <FilterCheckbox
+            key={option.filter}
+            label={option.label}
+            checked={filters[option.filter]}
+            onChange={() => toggleFilter(option.filter)}
+          />
+        ))}
       </div>
     </div>
   );

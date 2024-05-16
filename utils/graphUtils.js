@@ -3,7 +3,7 @@ import { DataSet } from 'vis-data';
 
 export const initializeNetwork = (graphRef, nodesRef, edgesRef, networkRef, handleNodeClick) => {
   const nodes = [
-    { id: 0, label: 'NUCLEO', color: '#ffffff', size: 40, type: 'core' },
+    { id: 0, label: 'ENTROPIA', color: '#ffffff', size: 40, type: 'core' },
     { id: 1, label: 'Software Department', color: '#3498db', group: 'software', size: 30, type: 'department' },
     { id: 2, label: 'Design Department', color: '#e74c3c', group: 'design', size: 30, type: 'department' },
     { id: 3, label: 'Marketing Department', color: '#f1c40f', group: 'marketing', size: 30, type: 'department' },
