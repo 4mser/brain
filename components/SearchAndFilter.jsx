@@ -1,13 +1,13 @@
 import React from 'react';
 
 const SearchInput = ({ searchQuery, handleSearchChange }) => (
-  <div>
+  <div className="flex-1">
     <input
       type="text"
       value={searchQuery}
       onChange={handleSearchChange}
       placeholder="Search nodes..."
-      className="absolute z-50 right-0  m-5 px-3 py-2 border border-white/10 bg-gray-800 text-white rounded-full"
+      className="w-full p-2 bg-gray-800 text-white rounded"
     />
   </div>
 );

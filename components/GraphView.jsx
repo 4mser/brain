@@ -4,8 +4,8 @@ import { DataSet } from 'vis-data';
 import { initializeNetwork, getAllChildNodes } from '../utils/graphUtils';
 import FilterPanel from './FilterPanel';
 import NodeModal from './NodeModal';
-import { motion, AnimatePresence } from 'framer-motion';
 import { SearchInput } from './SearchAndFilter';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const GraphView = () => {
   const graphRef = useRef(null);
@@ -24,6 +24,7 @@ const GraphView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedNode, setSelectedNode] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [filterPanelIsOpen, setFilterPanelIsOpen] = useState(false);
 
   const toggleFilter = (filter) => {
     setFilters((prevFilters) => {
@@ -140,19 +141,30 @@ const GraphView = () => {
     }
   }, [filters, searchQuery]);
 
+  const toggleFilterPanel = () => {
+    setFilterPanelIsOpen(!filterPanelIsOpen);
+  };
+
   return (
-    <div className="">
-        <SearchInput
-            searchQuery={searchQuery}
-            handleSearchChange={handleSearchChange}
-        />
+    <div className="flex flex-col h-[100dvh]">
+      <div className="flex items-center p-4 bg-slate-800">
+        <SearchInput searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
+        <button
+          className="ml-4 p-2 bg-slate-800 text-white/80 rounded-full border border-white/10"
+          onClick={toggleFilterPanel}
+        >
+          {filterPanelIsOpen ? 'x' : 'Filters'}
+        </button>
+      </div>
       <FilterPanel
         filters={filters}
         toggleFilter={toggleFilter}
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
+        isOpen={filterPanelIsOpen}
+        toggleMenu={toggleFilterPanel}
       />
-      <div ref={graphRef} className="flex-1 bg-gradient-to-tl from-neutral-950 to-slate-900 h-[100dvh]" />
+      <div ref={graphRef} className="flex-1 bg-gradient-to-tl from-neutral-950 to-slate-900" />
 
       <AnimatePresence>
         {modalIsOpen && (
