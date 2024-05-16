@@ -9,14 +9,24 @@ const FilterPanel = ({ filters, toggleFilter, searchQuery, handleSearchChange })
 
   return (
     <div>
+      {/* Button to toggle the menu on small screens */}
       <button
-        className="md:hidden fixed top-5 left-5 z-50 p-2 bg-slate-800 text-white/80 rounded-full border border-white/10 "
+        className="md:hidden fixed top-5 left-5 z-50 p-2 bg-slate-800 text-white/80 rounded-full border border-white/10"
         onClick={toggleMenu}
       >
-        {isOpen ? 'Close Menu' : 'Open Menu'}
+        {isOpen ? 'x' : 'Filters'}
       </button>
-      <div className={`fixed top-0 left-0 w-full h-full bg-black/80 z-40 ${isOpen ? 'block' : 'hidden'} md:hidden`} onClick={toggleMenu}></div>
-      <div className={`absolute z-50 w-52 p-4 bg-gradient-to-b from-gray-900 to-neutral-950 text-white m-5 rounded-xl max-h-[100dvh] border border-white/10 h-fit ${isOpen ? 'block' : 'hidden'} md:block`}>
+
+      {/* Background overlay to close the menu when clicking outside */}
+      <div 
+        className={`fixed top-0 left-0 w-full h-full bg-black/80 z-40 ${isOpen ? 'block' : 'hidden'} md:hidden`} 
+        onClick={toggleMenu}
+      ></div>
+
+      {/* Filter panel */}
+      <div 
+        className={`absolute z-50 w-52 p-4 bg-gradient-to-b from-gray-900 to-neutral-950 text-white m-5 shadow-xl rounded-xl max-h-[100dvh] border border-white/10 h-fit ${isOpen ? 'block' : 'hidden'} md:block`}
+      >
         <h3 className="text-lg font-bold mb-2">Search</h3>
         <input
           type="text"
