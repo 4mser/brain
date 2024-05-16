@@ -1,4 +1,4 @@
-import GraphView from "@/components/graph";
+import GraphView from "@/components/GraphView";
 
 export default function Home() {
   return (
