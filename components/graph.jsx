@@ -2,33 +2,62 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Network } from 'vis-network';
 import { DataSet } from 'vis-data';
+import Modal from 'react-modal';
 
 const GraphView = () => {
   const graphRef = useRef(null);
   const networkRef = useRef(null);
   const nodesRef = useRef(new DataSet());
   const edgesRef = useRef(new DataSet());
-  const [selectedType, setSelectedType] = useState('all');
+  const [filters, setFilters] = useState({
+    all: true,
+    department: false,
+    manager: false,
+    subnode: false,
+    worker: false,
+    team: false,
+    project: false,
+    intern: false,
+  });
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedNode, setSelectedNode] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const toggleFilter = (filter) => {
+    setFilters((prevFilters) => {
+      if (filter === 'all') {
+        return { all: true, department: false, manager: false, subnode: false, worker: false, team: false, project: false, intern: false };
+      } else {
+        return { ...prevFilters, [filter]: !prevFilters[filter], all: false };
+      }
+    });
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const initializeNetwork = () => {
-    // Definir los nodos
     const nodes = [
-      { id: 0, label: 'NUCLEO', color: '#ffffff', size: 40 }, // Nodo padre NUCLEO
-      { id: 1, label: 'Software', color: '#3498db', group: 'software', size: 30, type: 'department' },
-      { id: 2, label: 'Design', color: '#e74c3c', group: 'design', size: 30, type: 'department' },
-      { id: 3, label: 'Marketing', color: '#f1c40f', group: 'marketing', size: 30, type: 'department' },
-      { id: 4, label: 'Administrative', color: '#8e44ad', group: 'administrative', size: 30, type: 'department' },
-      
-      { id: 101, label: 'Nicolás Moreno', color: '#85c1e9', title: 'Manager of Software', group: 'software', size: 25, type: 'manager' },
-      { id: 102, label: 'Nicolás Richardson', color: '#f1948a', title: 'Manager of Design', group: 'design', size: 25, type: 'manager' },
-      { id: 103, label: 'Kevin Bravo', color: '#f9e79f', title: 'Manager of Marketing', group: 'marketing', size: 25, type: 'manager' },
-      { id: 104, label: 'Diego Oliver', color: '#d2b4de', title: 'Manager of Administrative', group: 'administrative', size: 25, type: 'manager' },
-      
-      { id: 5, label: 'Backend', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
-      { id: 6, label: 'Frontend', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
-      { id: 7, label: 'Data Science', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
-      { id: 8, label: 'AI', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
+      { id: 0, label: 'NUCLEO', color: '#ffffff', size: 40, type: 'core' },
+      { id: 1, label: 'Software Department', color: '#3498db', group: 'software', size: 30, type: 'department' },
+      { id: 2, label: 'Design Department', color: '#e74c3c', group: 'design', size: 30, type: 'department' },
+      { id: 3, label: 'Marketing Department', color: '#f1c40f', group: 'marketing', size: 30, type: 'department' },
+      { id: 4, label: 'Administrative Department', color: '#8e44ad', group: 'administrative', size: 30, type: 'department' },
+
+      { id: 101, label: 'Nicolás Moreno\nManager of Software', color: '#85c1e9', title: 'Manager of Software', group: 'software', size: 25, type: 'manager' },
+      { id: 102, label: 'Nicolás Richardson\nManager of Design', color: '#f1948a', title: 'Manager of Design', group: 'design', size: 25, type: 'manager' },
+      { id: 103, label: 'Kevin Bravo\nManager of Marketing', color: '#f9e79f', title: 'Manager of Marketing', group: 'marketing', size: 25, type: 'manager' },
+      { id: 104, label: 'Diego Oliver\nManager of Administrative', color: '#d2b4de', title: 'Manager of Administrative', group: 'administrative', size: 25, type: 'manager' },
+
+      { id: 5, label: 'Backend Team', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
+      { id: 6, label: 'Frontend Team', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
+      { id: 7, label: 'Data Science Team', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
+      { id: 8, label: 'AI Team', color: '#5dade2', group: 'software', size: 20, type: 'subnode' },
 
       { id: 201, label: 'Backend Manager', color: '#aed6f1', title: 'Backend Manager', group: 'software', size: 15, type: 'worker' },
       { id: 202, label: 'Backend Worker 1', color: '#aed6f1', group: 'software', size: 15, type: 'worker' },
@@ -43,9 +72,9 @@ const GraphView = () => {
       { id: 211, label: 'AI Worker 1', color: '#aed6f1', group: 'software', size: 15, type: 'worker' },
       { id: 212, label: 'AI Worker 2', color: '#aed6f1', group: 'software', size: 15, type: 'worker' },
 
-      { id: 9, label: 'UX/UI', color: '#f1948a', group: 'design', size: 20, type: 'subnode' },
-      { id: 10, label: 'Graphic Design', color: '#f1948a', group: 'design', size: 20, type: 'subnode' },
-      { id: 11, label: 'Posts', color: '#f1948a', group: 'design', size: 20, type: 'subnode' },
+      { id: 9, label: 'UX/UI Team', color: '#f1948a', group: 'design', size: 20, type: 'subnode' },
+      { id: 10, label: 'Graphic Design Team', color: '#f1948a', group: 'design', size: 20, type: 'subnode' },
+      { id: 11, label: 'Posts Team', color: '#f1948a', group: 'design', size: 20, type: 'subnode' },
 
       { id: 301, label: 'UX/UI Manager', color: '#f5b7b1', title: 'UX/UI Manager', group: 'design', size: 15, type: 'worker' },
       { id: 302, label: 'UX/UI Worker 1', color: '#f5b7b1', group: 'design', size: 15, type: 'worker' },
@@ -57,8 +86,8 @@ const GraphView = () => {
       { id: 308, label: 'Posts Worker 1', color: '#f5b7b1', group: 'design', size: 15, type: 'worker' },
       { id: 309, label: 'Posts Worker 2', color: '#f5b7b1', group: 'design', size: 15, type: 'worker' },
 
-      { id: 12, label: 'Advertising', color: '#f9e79f', group: 'marketing', size: 20, type: 'subnode' },
-      { id: 13, label: 'Strategies', color: '#f9e79f', group: 'marketing', size: 20, type: 'subnode' },
+      { id: 12, label: 'Advertising Team', color: '#f9e79f', group: 'marketing', size: 20, type: 'subnode' },
+      { id: 13, label: 'Strategies Team', color: '#f9e79f', group: 'marketing', size: 20, type: 'subnode' },
 
       { id: 401, label: 'Advertising Manager', color: '#fcf3cf', title: 'Advertising Manager', group: 'marketing', size: 15, type: 'worker' },
       { id: 402, label: 'Advertising Worker 1', color: '#fcf3cf', group: 'marketing', size: 15, type: 'worker' },
@@ -67,9 +96,9 @@ const GraphView = () => {
       { id: 405, label: 'Strategies Worker 1', color: '#fcf3cf', group: 'marketing', size: 15, type: 'worker' },
       { id: 406, label: 'Strategies Worker 2', color: '#fcf3cf', group: 'marketing', size: 15, type: 'worker' },
 
-      { id: 14, label: 'Finance', color: '#d2b4de', group: 'administrative', size: 20, type: 'subnode' },
-      { id: 15, label: 'Accounting', color: '#d2b4de', group: 'administrative', size: 20, type: 'subnode' },
-      { id: 16, label: 'Funds', color: '#d2b4de', group: 'administrative', size: 20, type: 'subnode' },
+      { id: 14, label: 'Finance Team', color: '#d2b4de', group: 'administrative', size: 20, type: 'subnode' },
+      { id: 15, label: 'Accounting Team', color: '#d2b4de', group: 'administrative', size: 20, type: 'subnode' },
+      { id: 16, label: 'Funds Team', color: '#d2b4de', group: 'administrative', size: 20, type: 'subnode' },
 
       { id: 501, label: 'Finance Manager', color: '#d7bde2', title: 'Finance Manager', group: 'administrative', size: 15, type: 'worker' },
       { id: 502, label: 'Finance Worker 1', color: '#d7bde2', group: 'administrative', size: 15, type: 'worker' },
@@ -79,7 +108,14 @@ const GraphView = () => {
       { id: 506, label: 'Accounting Worker 2', color: '#d7bde2', group: 'administrative', size: 15, type: 'worker' },
       { id: 507, label: 'Funds Manager', color: '#d7bde2', title: 'Funds Manager', group: 'administrative', size: 15, type: 'worker' },
       { id: 508, label: 'Funds Worker 1', color: '#d7bde2', group: 'administrative', size: 15, type: 'worker' },
-      { id: 509, label: 'Funds Worker 2', color: '#d7bde2', group: 'administrative', size: 15, type: 'worker' }
+      { id: 509, label: 'Funds Worker 2', color: '#d7bde2', group: 'administrative', size: 15, type: 'worker' },
+
+      { id: 17, label: 'Project Alpha', color: '#a569bd', group: 'project', size: 25, type: 'project' },
+      { id: 18, label: 'Project Beta', color: '#7d3c98', group: 'project', size: 25, type: 'project' },
+
+      { id: 19, label: 'Intern 1', color: '#d5dbdb', group: 'intern', size: 15, type: 'intern' },
+      { id: 20, label: 'Intern 2', color: '#d5dbdb', group: 'intern', size: 15, type: 'intern' },
+      { id: 21, label: 'Intern 3', color: '#d5dbdb', group: 'intern', size: 15, type: 'intern' }
     ];
 
     const edges = [
@@ -144,7 +180,13 @@ const GraphView = () => {
       { from: 15, to: 506 },
       { from: 16, to: 507 },
       { from: 16, to: 508 },
-      { from: 16, to: 509 }
+      { from: 16, to: 509 },
+
+      { from: 1, to: 17 },
+      { from: 2, to: 18 },
+      { from: 19, to: 17 },
+      { from: 20, to: 18 },
+      { from: 21, to: 17 }
     ];
 
     nodesRef.current.clear();
@@ -153,7 +195,6 @@ const GraphView = () => {
     nodesRef.current.add(nodes);
     edgesRef.current.add(edges);
 
-    // Configuración de la red
     const data = {
       nodes: nodesRef.current,
       edges: edgesRef.current
@@ -177,8 +218,8 @@ const GraphView = () => {
       interaction: {
         zoomView: true,
         dragView: true,
-        minZoom: 0.5, // Límite mínimo de zoom (50% del tamaño original)
-        maxZoom: 1.5  // Límite máximo de zoom (150% del tamaño original)
+        minZoom: 0.5,
+        maxZoom: 1.5
       },
       manipulation: {
         enabled: false
@@ -191,7 +232,6 @@ const GraphView = () => {
 
     const networkInstance = new Network(graphRef.current, data, options);
 
-    // Función para obtener todos los nodos hijos de un nodo dado
     const getAllChildNodes = (nodeId) => {
       let childNodes = [];
       let stack = [nodeId];
@@ -235,36 +275,19 @@ const GraphView = () => {
         nodesRef.current.update(updatedNodes);
         edgesRef.current.update(updatedEdges);
 
+        setSelectedNode(allNodes.find(node => node.id === nodeId));
         networkInstance.moveTo({
           position: { x: nodePosition.x, y: nodePosition.y },
-          scale: networkInstance.getScale()
-        });
-      } else {
-        const allNodes = nodesRef.current.get();
-        const updatedNodes = allNodes.map(node => ({
-          ...node,
-          opacity: selectedDepartments.includes(node.group) ? 1 : 0.1,
-          font: {
-            color: selectedDepartments.includes(node.group) ? '#ffffff' : 'rgba(255, 255, 255, 0.1)'
+          scale: networkInstance.getScale(),
+          animation: {
+            duration: 1000,
+            easingFunction: 'easeInOutQuad'
           }
-        }));
-
-        const allEdges = edgesRef.current.get();
-        const updatedEdges = allEdges.map(edge => {
-          const fromNodeGroup = allNodes.find(node => node.id === edge.from).group;
-          const toNodeGroup = allNodes.find(node => node.id === edge.to).group;
-          const edgeOpacity = selectedDepartments.includes(fromNodeGroup) && selectedDepartments.includes(toNodeGroup) ? 1 : 0.1;
-          return {
-            ...edge,
-            color: {
-              color: '#848484',
-              opacity: edgeOpacity
-            }
-          };
         });
 
-        nodesRef.current.update(updatedNodes);
-        edgesRef.current.update(updatedEdges);
+        setTimeout(() => {
+          openModal();
+        }, 500); // Delay to allow the animation to complete
       }
     });
 
@@ -275,10 +298,6 @@ const GraphView = () => {
     initializeNetwork();
   }, []);
 
-  const handleFilterChange = (type) => {
-    setSelectedType(type);
-  };
-
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -288,8 +307,10 @@ const GraphView = () => {
       const allNodes = nodesRef.current.get();
       const allEdges = edgesRef.current.get();
 
+      const activeFilters = Object.keys(filters).filter(filter => filters[filter]);
+
       const filteredNodes = allNodes.map(node => {
-        const matchesType = selectedType === 'all' || node.type === selectedType;
+        const matchesType = filters.all || activeFilters.includes(node.type);
         const matchesSearch = searchQuery === '' || node.label.toLowerCase().includes(searchQuery.toLowerCase());
         return {
           ...node,
@@ -303,8 +324,8 @@ const GraphView = () => {
       const updatedEdges = allEdges.map(edge => {
         const fromNodeGroup = allNodes.find(node => node.id === edge.from).group;
         const toNodeGroup = allNodes.find(node => node.id === edge.to).group;
-        const fromNodeMatches = selectedType === 'all' || fromNodeGroup === selectedType;
-        const toNodeMatches = selectedType === 'all' || toNodeGroup === selectedType;
+        const fromNodeMatches = filters.all || activeFilters.includes(fromNodeGroup);
+        const toNodeMatches = filters.all || activeFilters.includes(toNodeGroup);
         const edgeOpacity = fromNodeMatches && toNodeMatches ? 1 : 0.1;
         return {
           ...edge,
@@ -317,19 +338,80 @@ const GraphView = () => {
 
       nodesRef.current.update(filteredNodes);
       edgesRef.current.update(updatedEdges);
+
+      networkRef.current.redraw();
     }
-  }, [selectedType, searchQuery]);
+  }, [filters, searchQuery]);
 
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{ width: '200px', padding: '10px', backgroundColor: '#333', color: '#fff' }}>
         <h3>Filters</h3>
-        <div>
-          <button onClick={() => handleFilterChange('all')}>All</button>
-          <button onClick={() => handleFilterChange('department')}>Departments</button>
-          <button onClick={() => handleFilterChange('manager')}>Managers</button>
-          <button onClick={() => handleFilterChange('subnode')}>Subnodes</button>
-          <button onClick={() => handleFilterChange('worker')}>Workers</button>
+        <div className='flex flex-col'>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.all}
+              onChange={() => toggleFilter('all')}
+            />
+            Show All
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.department}
+              onChange={() => toggleFilter('department')}
+            />
+            Departments
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.manager}
+              onChange={() => toggleFilter('manager')}
+            />
+            Managers
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.subnode}
+              onChange={() => toggleFilter('subnode')}
+            />
+            Subnodes
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.worker}
+              onChange={() => toggleFilter('worker')}
+            />
+            Workers
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.team}
+              onChange={() => toggleFilter('team')}
+            />
+            Teams
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.project}
+              onChange={() => toggleFilter('project')}
+            />
+            Projects
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={filters.intern}
+              onChange={() => toggleFilter('intern')}
+            />
+            Interns
+          </label>
         </div>
         <h3>Search</h3>
         <input
@@ -341,6 +423,33 @@ const GraphView = () => {
         />
       </div>
       <div ref={graphRef} style={{ flex: 1, backgroundColor: '#000' }} />
+      
+      {selectedNode && (
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Node Information"
+          style={{
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, 0.75)'
+            },
+            content: {
+              color: '#000',
+              top: '50%',
+              left: '50%',
+              right: 'auto',
+              bottom: 'auto',
+              marginRight: '-50%',
+              transform: 'translate(-50%, -50%)'
+            }
+          }}
+        >
+          <h2>{selectedNode.label}</h2>
+          <p><strong>Type:</strong> {selectedNode.type}</p>
+          {selectedNode.title && <p><strong>Title:</strong> {selectedNode.title}</p>}
+          <button onClick={closeModal}>Close</button>
+        </Modal>
+      )}
     </div>
   );
 };
