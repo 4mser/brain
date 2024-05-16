@@ -147,7 +147,7 @@ const GraphView = () => {
         searchQuery={searchQuery}
         handleSearchChange={handleSearchChange}
       />
-      <div ref={graphRef} className="flex-1 bg-black h-[100dvh]" />
+      <div ref={graphRef} className="flex-1 bg-gradient-to-tl from-neutral-950 to-slate-900 h-[100dvh]" />
 
       <AnimatePresence>
         {modalIsOpen && (

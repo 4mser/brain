@@ -10,20 +10,20 @@ const FilterPanel = ({ filters, toggleFilter, searchQuery, handleSearchChange })
   return (
     <div>
       <button
-        className="md:hidden fixed top-5 left-5 z-50 p-2 bg-neutral-950 text-white rounded-full"
+        className="md:hidden fixed top-5 left-5 z-50 p-2 bg-slate-800 text-white/80 rounded-full border border-white/10 "
         onClick={toggleMenu}
       >
         {isOpen ? 'Close Menu' : 'Open Menu'}
       </button>
-      <div className={`fixed top-0 left-0 w-full h-full bg-black/50 z-40 ${isOpen ? 'block' : 'hidden'} md:hidden`} onClick={toggleMenu}></div>
-      <div className={`absolute z-50 w-52 p-4 bg-neutral-950 text-white m-5 rounded-xl max-h-[100dvh] border border-white/10 h-fit ${isOpen ? 'block' : 'hidden'} md:block`}>
+      <div className={`fixed top-0 left-0 w-full h-full bg-black/80 z-40 ${isOpen ? 'block' : 'hidden'} md:hidden`} onClick={toggleMenu}></div>
+      <div className={`absolute z-50 w-52 p-4 bg-gradient-to-b from-gray-900 to-neutral-950 text-white m-5 rounded-xl max-h-[100dvh] border border-white/10 h-fit ${isOpen ? 'block' : 'hidden'} md:block`}>
         <h3 className="text-lg font-bold mb-2">Search</h3>
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search nodes..."
-          className="w-full p-2 bg-neutral-800 text-white rounded"
+          className="w-full p-2 bg-gray-800 text-white rounded"
         />
         <h3 className="text-lg font-bold mt-4 mb-2">Filters</h3>
         <div className="space-y-2">
