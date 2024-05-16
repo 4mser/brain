@@ -218,8 +218,6 @@ const GraphView = () => {
       interaction: {
         zoomView: true,
         dragView: true,
-        minZoom: 0.5,
-        maxZoom: 1.5
       },
       manipulation: {
         enabled: false
@@ -288,6 +286,8 @@ const GraphView = () => {
         setTimeout(() => {
           openModal();
         }, 500); // Delay to allow the animation to complete
+      } else {
+        toggleFilter('all'); // Show all nodes and edges
       }
     });
 
@@ -347,7 +347,7 @@ const GraphView = () => {
     <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{ width: '200px', padding: '10px', backgroundColor: '#333', color: '#fff' }}>
         <h3>Filters</h3>
-        <div className='flex flex-col'>
+        <div>
           <label>
             <input
               type="checkbox"
@@ -423,7 +423,7 @@ const GraphView = () => {
         />
       </div>
       <div ref={graphRef} style={{ flex: 1, backgroundColor: '#000' }} />
-      
+
       {selectedNode && (
         <Modal
           isOpen={modalIsOpen}
@@ -447,7 +447,6 @@ const GraphView = () => {
           <h2>{selectedNode.label}</h2>
           <p><strong>Type:</strong> {selectedNode.type}</p>
           {selectedNode.title && <p><strong>Title:</strong> {selectedNode.title}</p>}
-          <button onClick={closeModal}>Close</button>
         </Modal>
       )}
     </div>
